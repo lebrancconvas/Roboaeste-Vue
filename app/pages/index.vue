@@ -17,15 +17,27 @@
 </template>
 
 <script>
+  import { Configuration, OpenAIApi } from 'openai';
+  const configuration = new Configuration({ apiKey: "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" })
+  const openai = new OpenAIApi(configuration);
   export default {
     data() {
       return {
-        prompt: ""
+        prompt: "",
+        apiKey: "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",
+        openAI: {},
+        response: {}
       }
     },
     methods: {
-      genImage() {
-        console.log(this.prompt);
+      async genImage() {
+        const response = await openai.createImage({
+          prompt: this.prompt,
+          n: 1,
+          size: "1024x1024"
+        })
+
+        console.log(`Response: ${response}`);
       }
     }
   }
